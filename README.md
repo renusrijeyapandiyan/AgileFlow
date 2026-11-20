@@ -1,29 +1,17 @@
 # 🚀 AgileFlow – Team Project Management System
 
 <p align="center">
-  <img src="docs/images/agileflow-banner.png" alt="AgileFlow Banner" width="100%">
-</p>
-
-<p align="center">
   <strong>A modern, full-stack Agile project management platform for small teams.</strong>
 </p>
 
 <p align="center">
-  <a href="https://agileflow-1.onrender.com">
-    🌐 Live Demo
-  </a>
+  <a href="https://agileflow-1.onrender.com">🌐 Live Demo</a>
   &nbsp; • &nbsp;
-  <a href="#-features">
-    Features
-  </a>
+  <a href="#-features">Features</a>
   &nbsp; • &nbsp;
-  <a href="#-installation-and-setup">
-    Installation
-  </a>
+  <a href="#-installation-and-setup">Installation</a>
   &nbsp; • &nbsp;
-  <a href="#-screenshots">
-    Screenshots
-  </a>
+  <a href="#-screenshots">Screenshots</a>
 </p>
 
 ---
@@ -39,26 +27,25 @@ AgileFlow is a Jira/Linear-inspired project management application designed to h
 ## 📸 Screenshots
 
 ### 1. Dashboard
+
 Get an overview of projects, tasks, overdue items, completion rates, project progress, and recent activity.
 
 ![Dashboard](docs/images/dashboard.png)
 
-### 2. Kanban Board
-Manage tasks visually using a drag-and-drop Kanban board with persistent status updates.
+### 2. Projects
 
-![Kanban Board](docs/images/kanban.png)
-
-### 3. Projects
 Create and manage projects, track deadlines, monitor progress, and organize project members.
 
 ![Projects](docs/images/projects.png)
 
-### 4. Task Management
+### 3. Task Management
+
 Search, filter, assign, and track tasks based on project, priority, status, and deadlines.
 
 ![Tasks](docs/images/tasks.png)
 
-### 5. Team Management
+### 4. Team Management
+
 Manage team members, assign job titles, transfer leadership, and monitor individual workloads.
 
 ![Team Management](docs/images/team.png)
