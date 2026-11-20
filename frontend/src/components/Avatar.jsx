@@ -1,8 +1,17 @@
 import { initials } from '../utils/format';
 
-const COLORS = ['bg-indigo-500', 'bg-violet-500', 'bg-sky-500', 'bg-emerald-500', 'bg-rose-500', 'bg-amber-500'];
+const GRADIENTS = [
+  'from-teal-500 to-orange-600', 'from-sky-500 to-teal-600', 'from-emerald-500 to-teal-600',
+  'from-rose-500 to-pink-600', 'from-amber-500 to-orange-600', 'from-amber-500 to-teal-600', 'from-cyan-500 to-blue-600',
+];
 
-export default function Avatar({ name, size = 'h-8 w-8 text-xs' }) {
-  const color = COLORS[(name || '').length % COLORS.length];
-  return <span title={name} className={`inline-flex ${size} shrink-0 items-center justify-center rounded-full font-semibold text-white ${color}`}>{initials(name)}</span>;
+const hash = (s = '') => [...s].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7);
+
+export default function Avatar({ name, size = 'h-8 w-8 text-xs', ring = false }) {
+  const g = GRADIENTS[hash(name) % GRADIENTS.length];
+  return (
+    <span title={name} className={`inline-flex ${size} shrink-0 items-center justify-center rounded-full bg-gradient-to-br ${g} font-semibold text-white shadow-sm ${ring ? 'ring-4 ring-white' : ''}`}>
+      {initials(name)}
+    </span>
+  );
 }

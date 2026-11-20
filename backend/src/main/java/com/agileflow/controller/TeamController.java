@@ -24,7 +24,29 @@ public class TeamController {
 
     @PostMapping("/projects/{projectId}/members")
     public ResponseEntity<MemberDto> add(@AuthenticationPrincipal AuthUser u, @PathVariable Long projectId, @Valid @RequestBody AddMemberRequest r) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(team.add(projectId, r.userId(), u.id()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(team.add(projectId, r.userId(), r.jobTitle(), u.id()));
+    }
+
+    @PostMapping("/projects/{projectId}/members/invite")
+    public ResponseEntity<MemberDto> invite(@AuthenticationPrincipal AuthUser u, @PathVariable Long projectId, @Valid @RequestBody InviteMemberRequest r) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(team.addByEmail(projectId, r.email(), r.jobTitle(), u.id()));
+    }
+
+    @PatchMapping("/projects/{projectId}/members/{userId}")
+    public MemberDto update(@AuthenticationPrincipal AuthUser u, @PathVariable Long projectId, @PathVariable Long userId, @Valid @RequestBody UpdateMemberRequest r) {
+        return team.updateMember(projectId, userId, r.jobTitle(), u.id());
+    }
+
+    @PostMapping("/projects/{projectId}/transfer-leadership")
+    public ResponseEntity<Void> transfer(@AuthenticationPrincipal AuthUser u, @PathVariable Long projectId, @Valid @RequestBody TransferLeadershipRequest r) {
+        team.transferLeadership(projectId, r.userId(), u.id());
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/projects/{projectId}/leave")
+    public ResponseEntity<Void> leave(@AuthenticationPrincipal AuthUser u, @PathVariable Long projectId) {
+        team.leave(projectId, u.id());
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/projects/{projectId}/members/{userId}")

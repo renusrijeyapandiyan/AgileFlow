@@ -131,8 +131,13 @@ public class DataSeeder implements CommandLineRunner {
         return users.save(u);
     }
 
+    private static final java.util.Map<String, String> TITLES = java.util.Map.of(
+            "demo@agileflow.local", "Product Manager", "alex@agileflow.local", "UX Designer", "sam@agileflow.local", "Backend Developer",
+            "priya@agileflow.local", "QA Engineer", "jordan@agileflow.local", "Frontend Developer");
+
     private void member(Project p, User u, MemberRole r) {
-        ProjectMember m = new ProjectMember(); m.setProject(p); m.setUser(u); m.setRole(r); members.save(m);
+        ProjectMember m = new ProjectMember(); m.setProject(p); m.setUser(u); m.setRole(r);
+        m.setJobTitle(TITLES.get(u.getEmail())); members.save(m);
     }
 
     private UserStory story(Project p, String title, String desc, String ac, Priority pr, StoryStatus st) {

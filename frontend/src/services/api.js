@@ -4,8 +4,8 @@ export const TOKEN_KEY = 'agileflow_token';
 
 export const api = axios.create({
   baseURL: (import.meta.env.VITE_API_URL || 'http://localhost:8080/api')
-  .replace(/\/+$/, '')
-  .replace(/\/api$/i, '') + '/api',
+    .replace(/\/+$/, '')
+    .replace(/\/api$/i, '') + '/api',
   headers: { 'Content-Type': 'application/json' },
 });
 

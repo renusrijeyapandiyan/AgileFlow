@@ -31,7 +31,11 @@ export const tasksApi = {
 export const teamApi = {
   users: () => api.get('/users'),
   members: (projectId) => api.get(`/projects/${projectId}/members`),
-  add: (projectId, userId) => api.post(`/projects/${projectId}/members`, { userId }),
+  add: (projectId, userId, jobTitle) => api.post(`/projects/${projectId}/members`, { userId, jobTitle }),
+  invite: (projectId, email, jobTitle) => api.post(`/projects/${projectId}/members/invite`, { email, jobTitle }),
+  update: (projectId, userId, jobTitle) => api.patch(`/projects/${projectId}/members/${userId}`, { jobTitle }),
+  transferLeadership: (projectId, userId) => api.post(`/projects/${projectId}/transfer-leadership`, { userId }),
+  leave: (projectId) => api.post(`/projects/${projectId}/leave`),
   remove: (projectId, userId, unassignTasks = false) => api.delete(`/projects/${projectId}/members/${userId}`, { params: { unassignTasks } }),
 };
 export const notificationsApi = {

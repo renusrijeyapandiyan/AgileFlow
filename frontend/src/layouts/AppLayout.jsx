@@ -4,16 +4,23 @@ import { Bell, FolderKanban, KanbanSquare, LayoutDashboard, ListChecks, LogOut, 
 import { useAuth } from '../context/AuthContext';
 import { notificationsApi } from '../services/endpoints';
 import Avatar from '../components/Avatar';
+import Aurora from '../components/Aurora';
 
 const NAV = [
-  { to: '/', label: 'Dashboard', icon: LayoutDashboard, end: true },
-  { to: '/projects', label: 'Projects', icon: FolderKanban },
-  { to: '/stories', label: 'User Stories', icon: BookOpenCheck },
-  { to: '/tasks', label: 'Tasks', icon: ListChecks },
-  { to: '/kanban', label: 'Kanban Board', icon: KanbanSquare },
-  { to: '/team', label: 'Team', icon: Users },
-  { to: '/notifications', label: 'Notifications', icon: Bell },
-  { to: '/profile', label: 'Profile', icon: UserCircle },
+  { group: 'Overview', items: [
+    { to: '/', label: 'Dashboard', icon: LayoutDashboard, end: true },
+    { to: '/projects', label: 'Projects', icon: FolderKanban },
+  ] },
+  { group: 'Work', items: [
+    { to: '/stories', label: 'User Stories', icon: BookOpenCheck },
+    { to: '/tasks', label: 'Tasks', icon: ListChecks },
+    { to: '/kanban', label: 'Kanban Board', icon: KanbanSquare },
+  ] },
+  { group: 'People', items: [
+    { to: '/team', label: 'Team', icon: Users },
+    { to: '/notifications', label: 'Notifications', icon: Bell },
+    { to: '/profile', label: 'Profile', icon: UserCircle },
+  ] },
 ];
 
 export default function AppLayout() {
@@ -31,47 +38,61 @@ export default function AppLayout() {
   }, []);
 
   const sidebar = (
-    <aside className="flex h-full w-64 flex-col bg-slate-900 text-slate-300">
-      <div className="flex items-center gap-2 px-5 py-5">
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-brand-500 to-violet-500 font-bold text-white">A</div>
-        <span className="text-lg font-semibold tracking-tight text-white">AgileFlow</span>
+    <aside className="flex h-full w-72 flex-col bg-gradient-to-b from-slate-950 via-slate-900 to-teal-950 text-slate-300 shadow-2xl">
+      <div className="flex items-center gap-3 px-6 py-6">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-brand-400 to-orange-500 text-lg font-extrabold text-white shadow-glow">A</div>
+        <div><span className="block text-lg font-bold leading-tight tracking-tight text-white">AgileFlow</span><span className="text-[11px] uppercase tracking-widest text-slate-500">Team workspace</span></div>
       </div>
-      <nav className="flex-1 space-y-1 px-3">
-        {NAV.map(({ to, label, icon: Icon, end }) => (
-          <NavLink key={to} to={to} end={end} onClick={() => setOpen(false)}
-            className={({ isActive }) => `flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition ${isActive ? 'bg-brand-600/25 text-white' : 'hover:bg-slate-800 hover:text-white'}`}>
-            <Icon className="h-4 w-4" /> <span className="flex-1">{label}</span>
-            {label === 'Notifications' && unread > 0 && <span className="rounded-full bg-rose-500 px-1.5 text-[10px] font-semibold text-white">{unread}</span>}
-          </NavLink>
+      <nav className="flex-1 space-y-6 overflow-y-auto px-4 pb-4">
+        {NAV.map(({ group, items }) => (
+          <div key={group}>
+            <p className="mb-2 px-3 text-[10px] font-semibold uppercase tracking-widest text-slate-500">{group}</p>
+            <div className="space-y-1">
+              {items.map(({ to, label, icon: Icon, end }) => (
+                <NavLink key={to} to={to} end={end} onClick={() => setOpen(false)}
+                  className={({ isActive }) => `group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition ${isActive ? 'bg-gradient-to-r from-brand-500 to-amber-500 text-white shadow-glow' : 'hover:bg-white/5 hover:text-white'}`}>
+                  {({ isActive }) => (
+                    <>
+                      {isActive && <span className="absolute -left-4 top-2 h-6 w-1 rounded-r-full bg-gradient-to-b from-brand-400 to-orange-400" />}
+                      <Icon className={`h-[18px] w-[18px] ${isActive ? 'text-white' : 'text-slate-400 group-hover:text-white'}`} />
+                      <span className="flex-1">{label}</span>
+                      {label === 'Notifications' && unread > 0 && <span className="rounded-full bg-rose-500 px-2 py-0.5 text-[10px] font-bold text-white">{unread}</span>}
+                    </>
+                  )}
+                </NavLink>
+              ))}
+            </div>
+          </div>
         ))}
       </nav>
-      <div className="border-t border-slate-800 p-3">
-        <div className="flex items-center gap-3 rounded-lg px-2 py-2">
-          <Avatar name={user.name} />
-          <div className="min-w-0 flex-1"><p className="truncate text-sm font-medium text-white">{user.name}</p><p className="truncate text-xs text-slate-400">{user.email}</p></div>
-          <button title="Log out" onClick={() => { logout(); navigate('/login'); }} className="rounded p-1.5 text-slate-400 hover:bg-slate-800 hover:text-white"><LogOut className="h-4 w-4" /></button>
+      <div className="m-4 rounded-2xl bg-white/5 p-3 ring-1 ring-white/10">
+        <div className="flex items-center gap-3">
+          <Avatar name={user.name} size="h-10 w-10 text-sm" />
+          <div className="min-w-0 flex-1"><p className="truncate text-sm font-semibold text-white">{user.name}</p><p className="truncate text-xs text-slate-400">{user.email}</p></div>
+          <button title="Log out" onClick={() => { logout(); navigate('/login'); }} className="rounded-lg p-2 text-slate-400 transition hover:bg-white/10 hover:text-white"><LogOut className="h-4 w-4" /></button>
         </div>
       </div>
     </aside>
   );
 
   return (
-    <div className="flex h-screen overflow-hidden">
-      <div className="hidden lg:block">{sidebar}</div>
+    <div className="relative flex h-screen overflow-hidden">
+      <Aurora />
+      <div className="relative z-10 hidden lg:block">{sidebar}</div>
       {open && (
         <div className="fixed inset-0 z-40 flex lg:hidden">
-          <div className="absolute inset-0 bg-slate-900/50" onClick={() => setOpen(false)} />
+          <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onClick={() => setOpen(false)} />
           <div className="relative z-50">{sidebar}</div>
         </div>
       )}
-      <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex items-center justify-between border-b border-slate-200 bg-white px-4 py-3 lg:hidden">
-          <button onClick={() => setOpen(!open)} className="rounded p-1.5 hover:bg-slate-100" aria-label="Menu">{open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}</button>
-          <span className="font-semibold text-slate-900">AgileFlow</span>
-          <button onClick={() => navigate('/notifications')} className="relative rounded p-1.5 hover:bg-slate-100"><Bell className="h-5 w-5" />
+      <div className="relative z-10 flex min-w-0 flex-1 flex-col">
+        <header className="flex items-center justify-between border-b border-slate-200/70 bg-white/80 px-4 py-3 backdrop-blur lg:hidden">
+          <button onClick={() => setOpen(!open)} className="rounded-lg p-2 hover:bg-slate-100" aria-label="Menu">{open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}</button>
+          <span className="font-bold text-slate-900">AgileFlow</span>
+          <button onClick={() => navigate('/notifications')} className="relative rounded-lg p-2 hover:bg-slate-100"><Bell className="h-5 w-5" />
             {unread > 0 && <span className="absolute -right-0.5 -top-0.5 rounded-full bg-rose-500 px-1 text-[10px] text-white">{unread}</span>}</button>
         </header>
-        <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8"><div className="mx-auto max-w-7xl"><Outlet /></div></main>
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-10"><div className="mx-auto max-w-7xl"><Outlet /></div></main>
       </div>
     </div>
   );

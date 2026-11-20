@@ -22,7 +22,11 @@ Errors share one shape: `{ timestamp, status, error, message, details{field:msg}
 | PATCH | /api/tasks/{id}/status | `{ "status": "TESTING" }` (Kanban move) | 200 |
 | GET | /api/users | All users (to pick members) | 200 |
 | GET/POST | /api/projects/{projectId}/members | List / add member (owner) `{userId}` | 200 / 201 |
-| DELETE | /api/projects/{projectId}/members/{userId}?unassignTasks=false | Remove member (owner). Without `unassignTasks=true` a member who still has assigned tasks gives 409; with it, their tasks in the project are unassigned. The owner cannot be removed (400). | 204 |
+| DELETE | /api/projects/{projectId}/members/{userId}?unassignTasks=false | Remove member (leader). Without `unassignTasks=true` a member who still has assigned tasks gives 409; with it, their tasks in the project are unassigned. The owner cannot be removed (400). | 204 |
+| POST | /api/projects/{projectId}/members/invite | Add a registered user by email (leader) `{email, jobTitle?}` | 201 |
+| PATCH | /api/projects/{projectId}/members/{userId} | Change job title `{jobTitle}` (leader, or the member themselves) | 200 |
+| POST | /api/projects/{projectId}/transfer-leadership | Make another member the team leader `{userId}` (leader) | 204 |
+| POST | /api/projects/{projectId}/leave | Leave the project (members only; tasks are unassigned) | 204 |
 | GET | /api/notifications | My delivered notifications | 200 |
 | GET | /api/notifications/unread-count | `{count}` | 200 |
 | PATCH | /api/notifications/{id}/read, /read-all | Mark read | 200 / 204 |

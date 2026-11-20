@@ -22,11 +22,15 @@ public final class Dtos {
 
     public record ProjectRequest(@NotBlank @Size(max = 150) String name, @Size(max = 2000) String description,
                                  LocalDate startDate, LocalDate deadline, List<Long> memberIds) {}
-    public record MemberDto(Long userId, String name, String email, MemberRole role, long assignedTasks) {}
+    public record MemberDto(Long userId, String name, String email, MemberRole role, String jobTitle, LocalDateTime joinedAt,
+                            long assignedTasks, long todoTasks, long inProgressTasks, long testingTasks, long doneTasks, long overdueTasks) {}
     public record ProjectResponse(Long id, String name, String description, LocalDate startDate, LocalDate deadline,
                                   Long ownerId, String ownerName, int progress, long storyCount, long taskCount,
                                   long doneTaskCount, List<MemberDto> members, LocalDateTime createdAt, LocalDateTime updatedAt) {}
-    public record AddMemberRequest(@NotNull Long userId) {}
+    public record AddMemberRequest(@NotNull Long userId, @Size(max = 80) String jobTitle) {}
+    public record InviteMemberRequest(@NotBlank @Email String email, @Size(max = 80) String jobTitle) {}
+    public record UpdateMemberRequest(@Size(max = 80) String jobTitle) {}
+    public record TransferLeadershipRequest(@NotNull Long userId) {}
 
     public record StoryRequest(@NotBlank @Size(max = 200) String title, @Size(max = 4000) String description,
                                @Size(max = 4000) String acceptanceCriteria, @NotNull Priority priority, StoryStatus status) {}

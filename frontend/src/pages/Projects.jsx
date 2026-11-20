@@ -1,3 +1,4 @@
+import { accent } from '../utils/theme';
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Calendar, FolderKanban, Pencil, Plus, Search, Trash2, Users } from 'lucide-react';
@@ -55,9 +56,11 @@ export default function Projects() {
       ) : !list.length ? <EmptyState title="No matching projects" text="Try a different search term." /> : (
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {list.map((p) => (
-            <div key={p.id} className="card flex flex-col p-5 transition hover:shadow-md">
+            <div key={p.id} className="card-hover flex flex-col overflow-hidden">
+              <div className={`h-2 bg-gradient-to-r ${accent(p.id).grad}`} />
+              <div className="flex flex-1 flex-col p-5">
               <div className="flex items-start justify-between gap-2">
-                <Link to={`/projects/${p.id}`} className="text-base font-semibold text-slate-900 hover:text-brand-600">{p.name}</Link>
+                <Link to={`/projects/${p.id}`} className="text-base font-bold text-slate-900 hover:text-brand-600">{p.name}</Link>
                 {p.ownerId === user.id && (
                   <div className="flex shrink-0">
                     <button className="btn-ghost !p-1.5" title="Edit" onClick={() => setEditing(p)}><Pencil className="h-4 w-4" /></button>
@@ -70,7 +73,8 @@ export default function Projects() {
               <div className="mt-4 flex items-center justify-between text-xs text-slate-500">
                 <span className="flex items-center gap-1"><Calendar className="h-3.5 w-3.5" /> {formatDate(p.deadline)}</span>
                 <span>{p.storyCount} stories · {p.taskCount} tasks</span>
-                <span className="flex items-center gap-1"><Users className="h-3.5 w-3.5" /> {p.members.length}</span>
+                <span className={`chip ${accent(p.id).soft}`}><Users className="h-3.5 w-3.5" /> {p.members.length}</span>
+              </div>
               </div>
             </div>
           ))}

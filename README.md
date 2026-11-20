@@ -9,8 +9,8 @@ team management, a dashboard with charts, and a background workflow that generat
 ## Features
 Auth (register/login/logout, BCrypt, JWT, protected routes) · Dashboard (totals, overdue, progress %, charts, recent activity) ·
 Projects CRUD with dates & members · User stories CRUD (priority/status/acceptance criteria) · Tasks CRUD + assignment ·
-Kanban (To Do / In Progress / Testing / Done, persisted) · Team management & workload · Notification center (upcoming/overdue, mark read) ·
-Profile · Swagger UI · Scheduled + async deadline workflow with retries and de-duplication · Unit tests (JUnit 5 + Mockito).
+Kanban (To Do / In Progress / Testing / Done, persisted) · Team leader & member management (add by search or email, job titles, transfer leadership, leave project, per-member workload) · Notification center (upcoming/overdue, mark read) ·
+Profile · Redesigned gradient UI · Swagger UI · Scheduled + async deadline workflow with retries and de-duplication · Unit tests (JUnit 5 + Mockito).
 
 📖 **New to the app? Read the [User Manual](docs/USER_MANUAL.md).**
 
@@ -97,6 +97,9 @@ and task authorization/validation rules (Mockito). Frontend: `cd frontend ; npm 
 **Tasks** – searchable table with project, status and priority filters, plus "Assigned to me" and "Overdue"
 ![Tasks](docs/img/tasks.png)
 
+**Team** – team leader spotlight, member cards with job titles and workload bars, add / remove / make leader
+![Team](docs/img/team.png)
+
 ## Design decisions & trade-offs
 See [docs/design-decisions.md](docs/design-decisions.md). Highlights: SQLite with a single pooled connection; protected deletes (409) rather than cascading deletes;
 durable DB-backed notification queue; native HTML5 drag-and-drop.
@@ -107,6 +110,9 @@ Known limitations (localStorage token, no rate limiting, public Swagger) are lis
 
 ## Background workflow
 `@Scheduled` job scans open tasks → creates `PENDING` notifications (unique dedupe key) → `@Async` processor delivers them, recording `status`, `retry_count`, `last_error`; failures retry with backoff up to a limit. See [docs/async-workflow.md](docs/async-workflow.md).
+
+## Deployment (Render)
+See [docs/deployment.md](docs/deployment.md) – a Docker web service for the API plus a static site for the frontend (`backend/Dockerfile` and `render.yaml` are included). Free tier: the API sleeps when idle and SQLite data resets on redeploy.
 
 ## Troubleshooting
 * `Port 8080 in use` → `$env:PORT=8081` (and set `VITE_API_URL` accordingly).

@@ -59,7 +59,7 @@ export default function ProjectDetails() {
           <button className="btn-primary" onClick={() => setStoryModal('new')}><Plus className="h-4 w-4" /> Add story</button></>} />
 
       <div className="grid gap-4 md:grid-cols-4">
-        <div className="card p-4"><p className="label">Owner</p><p className="text-sm font-medium">{p.ownerName}</p></div>
+        <div className="card p-4"><p className="label">Team Leader</p><p className="text-sm font-medium">{p.ownerName}</p></div>
         <div className="card p-4"><p className="label">Timeline</p><p className="flex items-center gap-1 text-sm font-medium"><Calendar className="h-4 w-4 text-slate-400" /> {formatDate(p.startDate)} → {formatDate(p.deadline)}</p></div>
         <div className="card p-4"><p className="label">Work items</p><p className="text-sm font-medium">{p.storyCount} stories · {p.taskCount} tasks ({p.doneTaskCount} done)</p></div>
         <div className="card p-4"><p className="label">Progress</p><ProgressBar value={p.progress} /></div>
@@ -96,11 +96,11 @@ export default function ProjectDetails() {
         </div>
 
         <div>
-          <h2 className="mb-4 text-lg font-semibold text-slate-900">Team</h2>
+          <div className="mb-4 flex items-center justify-between"><h2 className="text-lg font-semibold text-slate-900">Team</h2><Link to={`/team?project=${p.id}`} className="text-sm font-semibold text-brand-600 hover:underline">Manage team →</Link></div>
           <div className="card divide-y divide-slate-100">
             {p.members.map((m) => (
               <div key={m.userId} className="flex items-center gap-3 p-3">
-                <Avatar name={m.name} /><div className="min-w-0 flex-1"><p className="truncate text-sm font-medium">{m.name}</p><p className="text-xs text-slate-500">{m.role === 'OWNER' ? 'Owner' : 'Member'} · {m.assignedTasks} tasks</p></div>
+                <Avatar name={m.name} /><div className="min-w-0 flex-1"><p className="truncate text-sm font-medium">{m.name}</p><p className="text-xs text-slate-500">{m.role === 'OWNER' ? '👑 Team Leader' : (m.jobTitle || 'Team Member')} · {m.assignedTasks} tasks</p></div>
                 {isOwner && m.role !== 'OWNER' && <button className="text-slate-300 hover:text-red-600" title="Remove" onClick={() => setDel({ kind: 'member', item: m })}><X className="h-4 w-4" /></button>}
               </div>
             ))}

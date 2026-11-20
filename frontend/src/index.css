@@ -3,17 +3,28 @@
 @tailwind utilities;
 
 @layer base {
-  body { @apply bg-slate-50 text-slate-800 antialiased; }
+  body {
+    @apply text-slate-800 antialiased;
+    background-color: #fff7ed;
+    background-image: radial-gradient(rgba(15,23,42,.07) 1.2px, transparent 1.2px);
+    background-size: 24px 24px;
+    background-attachment: fixed;
+  }
+  ::selection { background: rgba(99,102,241,.25); }
 }
 @layer components {
-  .btn { @apply inline-flex items-center justify-center gap-2 rounded-lg px-3.5 py-2 text-sm font-medium transition focus:outline-none focus:ring-2 focus:ring-brand-500/40 disabled:cursor-not-allowed disabled:opacity-60; }
-  .btn-primary { @apply btn bg-brand-600 text-white hover:bg-brand-700; }
-  .btn-secondary { @apply btn border border-slate-200 bg-white text-slate-700 hover:bg-slate-50; }
-  .btn-danger { @apply btn bg-red-600 text-white hover:bg-red-700; }
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition duration-150 focus:outline-none focus:ring-2 focus:ring-brand-500/40 active:scale-[.98] disabled:cursor-not-allowed disabled:opacity-60; }
+  .btn-primary { @apply btn bg-gradient-to-br from-brand-500 to-orange-600 text-white shadow-sm hover:shadow-glow hover:brightness-110; }
+  .btn-secondary { @apply btn border border-slate-200 bg-white text-slate-700 shadow-sm hover:border-slate-300 hover:bg-slate-50; }
+  .btn-danger { @apply btn bg-gradient-to-br from-rose-500 to-red-600 text-white hover:brightness-110; }
   .btn-ghost { @apply btn text-slate-600 hover:bg-slate-100; }
-  .input { @apply w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm placeholder:text-slate-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20; }
-  .label { @apply mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-500; }
-  .card { @apply rounded-xl border border-slate-200 bg-white shadow-sm; }
-  .th { @apply px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500; }
+  .input { @apply w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm shadow-sm placeholder:text-slate-400 transition focus:border-brand-500 focus:outline-none focus:ring-4 focus:ring-brand-500/10; }
+  .label { @apply mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-slate-500; }
+  .card { @apply rounded-2xl border border-white/70 bg-white/85 shadow-soft backdrop-blur-xl; }
+  .card-hover { @apply card transition duration-200 hover:-translate-y-0.5 hover:shadow-lift; }
+  .th { @apply px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-slate-500; }
   .td { @apply px-4 py-3 text-sm; }
+  .chip { @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold; }
+  .sunset { @apply bg-gradient-to-r from-brand-500 via-orange-500 to-amber-400; }
+  .gradient-text { @apply bg-gradient-to-r from-brand-600 to-orange-600 bg-clip-text text-transparent; }
 }

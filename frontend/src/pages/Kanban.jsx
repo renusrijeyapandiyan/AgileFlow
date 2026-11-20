@@ -14,7 +14,9 @@ import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import { projectsApi, storiesApi, tasksApi } from '../services/endpoints';
 import { errorMessage } from '../services/api';
-import { STATUS_COLORS, TASK_STATUSES, formatDate, label } from '../utils/format';
+import { PRIORITY_BORDER, STATUS_COLORS, TASK_STATUSES, formatDate, label } from '../utils/format';
+
+const COLUMN_TINT = { TO_DO: 'bg-slate-100/80', IN_PROGRESS: 'bg-sky-50/80', TESTING: 'bg-amber-50/80', DONE: 'bg-emerald-50/80' };
 
 export default function Kanban() {
   const { user } = useAuth();
@@ -62,16 +64,17 @@ export default function Kanban() {
             return (
               <div key={status} onDragOver={(e) => { e.preventDefault(); setOver(status); }} onDragLeave={() => setOver((o) => (o === status ? null : o))}
                 onDrop={(e) => { e.preventDefault(); setOver(null); move(Number(e.dataTransfer.getData('text/plain')) || dragId, status); setDragId(null); }}
-                className={`flex min-h-[420px] flex-col rounded-xl border bg-slate-100/70 p-3 transition ${over === status ? 'border-brand-500 bg-brand-50/60' : 'border-slate-200'}`}>
-                <div className="mb-3 flex items-center justify-between px-1">
+                className={`flex min-h-[420px] flex-col rounded-2xl border p-3 transition ${COLUMN_TINT[status]} ${over === status ? 'border-brand-500 ring-4 ring-brand-500/10' : 'border-white/60'}`}>
+                <div className="mb-3 flex items-center justify-between rounded-xl bg-white/80 px-3 py-2 shadow-sm" style={{ borderTop: `3px solid ${STATUS_COLORS[status]}` }}>
                   <span className="flex items-center gap-2 text-sm font-semibold text-slate-700"><span className="h-2.5 w-2.5 rounded-full" style={{ background: STATUS_COLORS[status] }} />{label(status)}</span>
-                  <span className="rounded-full bg-white px-2 py-0.5 text-xs font-medium text-slate-500">{col.length}</span>
+                  <span className="rounded-full px-2.5 py-0.5 text-xs font-bold text-white" style={{ background: STATUS_COLORS[status] }}>{col.length}</span>
                 </div>
                 <div className="flex-1 space-y-3">
                   {col.map((t) => (
                     <div key={t.id} draggable onDragStart={(e) => { setDragId(t.id); e.dataTransfer.setData('text/plain', String(t.id)); e.dataTransfer.effectAllowed = 'move'; }}
                       onDragEnd={() => { setDragId(null); setOver(null); }} onClick={() => setEditing(t)}
-                      className={`cursor-grab rounded-lg border border-slate-200 bg-white p-3 shadow-sm transition hover:shadow-md active:cursor-grabbing ${dragId === t.id ? 'opacity-40' : ''}`}>
+                      style={{ borderLeft: `4px solid ${PRIORITY_BORDER[t.priority]}` }}
+                      className={`cursor-grab rounded-xl border border-slate-200/70 bg-white p-3 shadow-soft transition hover:-translate-y-0.5 hover:shadow-lift active:cursor-grabbing ${dragId === t.id ? 'opacity-40' : ''}`}>
                       <p className="text-sm font-medium text-slate-900">{t.title}</p>
                       <p className="mt-0.5 truncate text-xs text-slate-400">{t.storyTitle}</p>
                       <div className="mt-3 flex items-center justify-between">

@@ -83,35 +83,42 @@ Open **Tasks** for a table of every task, or add tasks inside a story on the pro
 
 ## 7. Managing your team
 
-### Who can do what
-| Action | Owner | Member |
-|---|:-:|:-:|
-| See the project, its stories, tasks and team | ✔ | ✔ |
-| Create / edit / delete stories and tasks, move cards | ✔ | ✔ |
-| Edit or delete the project | ✔ | ✖ |
-| **Add or remove team members** | ✔ | ✖ |
+Open **Team** in the sidebar and choose a project. The page shows:
 
-People who are not in a project cannot see any of its data.
+- A **project banner** with progress and deadline.
+- **Summary tiles**: team size, open tasks, overdue tasks and the leader.
+- A **Team Leader spotlight** card with the leader's title, tasks and stats.
+- A **member card** for everyone: avatar, job title, role, email, date joined and a colour-coded **workload bar** (To do / In progress / Testing / Done, plus an overdue badge).
+- A **search box** that filters by name, email or job title.
+- A **workload comparison** panel (leader only) to spot who is overloaded.
+
+### Who can do what
+
+| Action | Team Leader | Team Member |
+|---|---|---|
+| View team and workloads | Yes | Yes |
+| Add a member | Yes | No |
+| Remove a member | Yes | No |
+| Change anyone's job title | Yes | Only their own |
+| Make another member the leader | Yes | No |
+| Leave the project | No (transfer leadership first) | Yes |
 
 ### Add a team member
-1. Make sure the person has **registered** an account.
-2. Go to **Team** (pick the project in the selector) *or* open the project's detail page.
-3. In the **"Select a user to add…"** / **"Add member…"** dropdown choose the person and click **Add to project**.
-4. They now see the project in their own account and can be assigned tasks.
+1. Click **Add member** (leaders only).
+2. **Find a user**: search the registered users, click one, optionally enter a job title, then **Add to project**.
+   **Add by email**: type the person's email address and a job title. The person must already have an account; use **Copy sign-up link** to send them one.
 
-If the dropdown says *"Everyone is already a member"*, every registered user is already on the project.
+### Change a job title
+Open the **⋮** menu on a member card and choose **Edit job title**. Leaders can edit any member; members can edit their own.
+
+### Make someone the team leader
+Open the **⋮** menu on a member and choose **Make team leader**, then confirm. They become the leader and you stay on as a regular member.
 
 ### Remove a team member
-1. On **Team** or the project detail page click the **✕** next to the member (visible to the owner only).
-2. Confirm in the dialog.
-3. If the person has assigned tasks in this project, the dialog tells you how many. Confirming **keeps the tasks but makes them unassigned**, so you can give them to someone else afterwards.
+Open the **⋮** menu and choose **Remove from project**. If they have assigned tasks, the dialog tells you how many will become unassigned. The leader cannot be removed; transfer leadership first.
 
-Rules: the project **owner cannot be removed**, and you cannot add the same person twice. Removed members immediately lose access to the project.
-
-### Workload
-Each member card shows their role (Owner/Member) and the **number of tasks assigned** to them in that project – useful for balancing work.
-
----
+### Leave a project
+Members can click **Leave project** at the top of the Team page. Their tasks in that project become unassigned. The leader must transfer leadership before leaving.
 
 ## 8. Notifications
 The system checks task deadlines automatically in the background (about once a minute) and creates a notification for the **assignee** when a task:

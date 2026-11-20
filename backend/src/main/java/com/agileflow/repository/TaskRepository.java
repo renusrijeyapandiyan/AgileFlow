@@ -20,6 +20,12 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     long countByAssigneeIdAndStoryProjectId(Long assigneeId, Long projectId);
     List<Task> findByAssigneeIdAndStoryProjectId(Long assigneeId, Long projectId);
 
+    @Query("select count(t) from Task t where t.assignee.id = :uid and t.story.project.id = :pid and t.status = :status")
+    long countForAssigneeByStatus(@Param("uid") Long uid, @Param("pid") Long pid, @Param("status") TaskStatus status);
+
+    @Query("select count(t) from Task t where t.assignee.id = :uid and t.story.project.id = :pid and t.status <> :done and t.dueDate < :today")
+    long countOverdueForAssignee(@Param("uid") Long uid, @Param("pid") Long pid, @Param("done") TaskStatus done, @Param("today") LocalDate today);
+
     @Query("select count(t) from Task t where t.story.project.id in :pids and t.status <> :done and t.dueDate < :today")
     long countOverdue(@Param("pids") Collection<Long> pids, @Param("done") TaskStatus done, @Param("today") LocalDate today);
 

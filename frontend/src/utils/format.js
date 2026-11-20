@@ -5,19 +5,20 @@ export const TASK_STATUSES = ['TO_DO', 'IN_PROGRESS', 'TESTING', 'DONE'];
 export const LABELS = {
   LOW: 'Low', MEDIUM: 'Medium', HIGH: 'High', CRITICAL: 'Critical',
   TO_DO: 'To Do', IN_PROGRESS: 'In Progress', TESTING: 'Testing', DONE: 'Done',
-  OWNER: 'Owner', MEMBER: 'Member', UPCOMING_DEADLINE: 'Upcoming deadline', OVERDUE: 'Overdue',
+  OWNER: 'Team Leader', MEMBER: 'Team Member', UPCOMING_DEADLINE: 'Upcoming deadline', OVERDUE: 'Overdue',
 };
 export const label = (v) => LABELS[v] || v;
 
 export const PRIORITY_STYLES = {
-  LOW: 'bg-slate-100 text-slate-600', MEDIUM: 'bg-blue-50 text-blue-700',
-  HIGH: 'bg-orange-50 text-orange-700', CRITICAL: 'bg-red-50 text-red-700',
+  LOW: 'bg-slate-100 text-slate-600 ring-1 ring-slate-200', MEDIUM: 'bg-teal-100 text-teal-700 ring-1 ring-teal-200',
+  HIGH: 'bg-orange-100 text-orange-700 ring-1 ring-orange-200', CRITICAL: 'bg-rose-100 text-rose-700 ring-1 ring-rose-200',
 };
 export const STATUS_STYLES = {
-  TO_DO: 'bg-slate-100 text-slate-700', IN_PROGRESS: 'bg-blue-50 text-blue-700',
-  TESTING: 'bg-amber-50 text-amber-700', DONE: 'bg-emerald-50 text-emerald-700',
+  TO_DO: 'bg-slate-100 text-slate-700 ring-1 ring-slate-200', IN_PROGRESS: 'bg-sky-100 text-sky-700 ring-1 ring-sky-200',
+  TESTING: 'bg-amber-100 text-amber-700 ring-1 ring-amber-200', DONE: 'bg-emerald-100 text-emerald-700 ring-1 ring-emerald-200',
 };
-export const STATUS_COLORS = { TO_DO: '#94a3b8', IN_PROGRESS: '#6366f1', TESTING: '#f59e0b', DONE: '#10b981' };
+export const PRIORITY_BORDER = { LOW: '#94a3b8', MEDIUM: '#14b8a6', HIGH: '#f97316', CRITICAL: '#f43f5e' };
+export const STATUS_COLORS = { TO_DO: '#94a3b8', IN_PROGRESS: '#0ea5e9', TESTING: '#f59e0b', DONE: '#10b981' };
 
 export function formatDate(d) {
   if (!d) return '—';
@@ -39,3 +40,5 @@ export function timeAgo(d) {
 }
 
 export const initials = (name = '?') => name.split(' ').filter(Boolean).slice(0, 2).map((p) => p[0].toUpperCase()).join('');
+
+export const JOB_TITLES = ['Product Manager', 'Scrum Master', 'Frontend Developer', 'Backend Developer', 'Full-Stack Developer', 'UX Designer', 'QA Engineer', 'DevOps Engineer', 'Business Analyst'];

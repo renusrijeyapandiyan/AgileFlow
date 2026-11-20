@@ -13,7 +13,7 @@ users 1─┬─* project_members *─┬─1 projects 1─* user_stories 1─* 
 |---|---|---|
 | `users` | id PK, name, email, password_hash, created_at, updated_at | UNIQUE(email) |
 | `projects` | id, name, description, start_date, deadline, **owner_id FK→users** | idx(owner_id) |
-| `project_members` | id, **project_id FK**, **user_id FK**, role (OWNER/MEMBER) | UNIQUE(project_id,user_id); idx(user_id), idx(project_id) |
+| `project_members` | id, **project_id FK**, **user_id FK**, role (OWNER = team leader / MEMBER), job_title (nullable) | UNIQUE(project_id,user_id); idx(user_id), idx(project_id) |
 | `user_stories` | id, **project_id FK**, title, description, acceptance_criteria, priority, status | NOT NULL project_id/title/priority/status; idx(project_id), idx(status) |
 | `tasks` | id, **story_id FK**, title, description, **assignee_id FK (nullable)**, priority, status, start_date, due_date | idx(story_id), idx(assignee_id), idx(status), idx(due_date) |
 | `notifications` | id, **user_id FK**, **task_id FK (nullable)**, type, message, status (PENDING/SENT/FAILED), retry_count, is_read, dedupe_key, last_error, next_attempt_at, sent_at | **UNIQUE(dedupe_key)**; idx(user_id), idx(status) |

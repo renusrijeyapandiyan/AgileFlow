@@ -16,4 +16,6 @@ public class ProjectMember extends BaseEntity {
     private User user;
     @Enumerated(EnumType.STRING) @Column(nullable = false, length = 20)
     private MemberRole role = MemberRole.MEMBER;
+    @Column(name = "job_title", length = 80)
+    private String jobTitle;
 }

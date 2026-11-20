@@ -27,12 +27,22 @@ public class Mapper {
         long done = tasks.countByStoryProjectIdAndStatus(p.getId(), TaskStatus.DONE);
         int progress = total == 0 ? 0 : (int) Math.round(done * 100.0 / total);
         List<MemberDto> ms = members.findByProjectIdOrderByCreatedAtAsc(p.getId()).stream()
-                .map(m -> new MemberDto(m.getUser().getId(), m.getUser().getName(), m.getUser().getEmail(), m.getRole(),
-                        tasks.countByAssigneeIdAndStoryProjectId(m.getUser().getId(), p.getId())))
+                .map(m -> member(m, p.getId()))
                 .toList();
         return new ProjectResponse(p.getId(), p.getName(), p.getDescription(), p.getStartDate(), p.getDeadline(),
                 p.getOwner().getId(), p.getOwner().getName(), progress, stories.countByProjectId(p.getId()), total, done, ms,
                 p.getCreatedAt(), p.getUpdatedAt());
+    }
+
+    public MemberDto member(ProjectMember m, Long projectId) {
+        Long uid = m.getUser().getId();
+        return new MemberDto(uid, m.getUser().getName(), m.getUser().getEmail(), m.getRole(), m.getJobTitle(), m.getCreatedAt(),
+                tasks.countByAssigneeIdAndStoryProjectId(uid, projectId),
+                tasks.countForAssigneeByStatus(uid, projectId, TaskStatus.TO_DO),
+                tasks.countForAssigneeByStatus(uid, projectId, TaskStatus.IN_PROGRESS),
+                tasks.countForAssigneeByStatus(uid, projectId, TaskStatus.TESTING),
+                tasks.countForAssigneeByStatus(uid, projectId, TaskStatus.DONE),
+                tasks.countOverdueForAssignee(uid, projectId, TaskStatus.DONE, LocalDate.now()));
     }
 
     public StoryResponse story(UserStory s) {
