@@ -30,26 +30,25 @@ AgileFlow is a Jira/Linear-inspired project management application designed to h
 
 Get an overview of projects, tasks, overdue items, completion rates, project progress, and recent activity.
 
-![Dashboard](docs/images/dashboard.png)
+![Dashboard](img/dashboard.png)
 
 ### 2. Projects
 
 Create and manage projects, track deadlines, monitor progress, and organize project members.
 
-![Projects](docs/images/projects.png)
+![Projects](img/projects.png)
 
 ### 3. Task Management
 
 Search, filter, assign, and track tasks based on project, priority, status, and deadlines.
 
-![Tasks](docs/images/tasks.png)
+![Tasks](img/tasks.png)
 
 ### 4. Team Management
 
 Manage team members, assign job titles, transfer leadership, and monitor individual workloads.
 
-![Team Management](docs/images/team.png)
-
+![Team Management](img/team.png)
 ---
 
 ## ✨ Features
