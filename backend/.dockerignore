@@ -1,0 +1,6 @@
+target/
+*.db
+*.db-journal
+.agileflow-jwt-secret
+.idea/
+.vscode/
