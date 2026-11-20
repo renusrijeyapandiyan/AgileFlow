@@ -1,0 +1,14 @@
+node_modules/
+dist/
+target/
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+.agileflow-jwt-secret
+.env
+.idea/
+.vscode/
+*.log
+
+.sf/
